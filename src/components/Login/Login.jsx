@@ -9,6 +9,8 @@ import {
 } from "firebase/auth";
 import app from "../../firebase/firebase.config";
 import { Link } from "react-router-dom";
+import eye from "../../assets/eye.png";
+import hidden from "../../assets/hidden.png";
 
 const auth = getAuth(app);
 
@@ -22,6 +24,7 @@ const Login = () => {
    console.log(user);
    const [error, setError] = useState("");
    const [success, setSuccess] = useState("");
+   const [control, setControl] = useState(false);
 
    const emailRef = useRef();
 
@@ -73,6 +76,8 @@ const Login = () => {
       });
    };
 
+   const handleShow = () => {};
+
    return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-indigo-600 flex flex-col justify-center items-center">
          <div className="bg-white w-[60%] rounded-lg shadow-md p-10 flex flex-col justify-center items-center space-y-6">
@@ -92,21 +97,32 @@ const Login = () => {
                      name="email"
                      id="email"
                      ref={emailRef}
-                     className="w-full border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+                     className="w-full p-2 border border-blue-400 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
                   />
                </div>
-               <div className="w-full">
+               <div className="w-full relative">
                   <label
                      htmlFor="password"
                      className="block text-lg font-medium text-gray-700 mb-1">
                      Password
                   </label>
                   <input
-                     type="password"
+                     type={control ? "text" : "password"}
                      name="password"
                      id="password"
-                     className="w-full input border-blue-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+                     className="w-full h-full border border-blue-400 p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
                   />
+                  <span
+                     onClick={() => {
+                        setControl(!control);
+                     }}
+                     className="absolute top-[50px] cursor-pointer transform -translate-y-1/2 right-2">
+                     {control ? (
+                        <img className="h-6 w-6" src={hidden} alt="" />
+                     ) : (
+                        <img className="h-6 w-6" src={eye} alt="" />
+                     )}
+                  </span>
                </div>
                <div className="w-full">
                   <input
